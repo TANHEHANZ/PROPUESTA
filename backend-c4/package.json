@@ -1,11 +1,11 @@
 {
   "name": "backend-c4",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
-    "build": "tsc",
+    "build": "npx prisma generate && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
