@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "dist/app.js",
   "scripts": {
+    "prebuild": "npx prisma generate",
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "npx prisma generate && tsc",
