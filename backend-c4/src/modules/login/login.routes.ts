@@ -5,8 +5,35 @@ import {
   RegisterInitial,
   stepSchema,
 } from "../../infraestructure/validators/login";
+
 const LoginRouter = Router();
 
+/**
+ * @swagger
+ * /initialize:
+ *   post:
+ *     tags: [Authentication]
+ *     summary: Initialize the login process
+ *     parameters:
+ *       - in: query
+ *         name: step
+ *         schema:
+ *           $ref: '#/components/schemas/StepQuery'
+ *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             oneOf:
+ *               - $ref: '#/components/schemas/Step1Schema'
+ *               - $ref: '#/components/schemas/RegisterInitial'
+ *     responses:
+ *       200:
+ *         description: Successfully initialized
+ *       400:
+ *         description: Validation error
+ */
 LoginRouter.post(
   "/initialize",
   validate(stepSchema, "query"),
