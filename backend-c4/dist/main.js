@@ -49,7 +49,7 @@ const createServer = () => {
         .use(express_1.default.urlencoded({ extended: true }))
         .use(express_1.default.json())
         .use((0, cors_1.default)())
-        .use("/", routes_1.default);
+        .use("/api/v2", routes_1.default);
     app.get("/", (req, res) => {
         res.json({
             status: "success",
