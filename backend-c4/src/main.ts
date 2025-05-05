@@ -11,7 +11,7 @@ export const createServer = () => {
     .use(express.urlencoded({ extended: true }))
     .use(express.json())
     .use(cors())
-    .use("/", router);
+    .use("/api/v2", router);
 
   app.get("/", (req: Request, res: Response) => {
     res.json({
