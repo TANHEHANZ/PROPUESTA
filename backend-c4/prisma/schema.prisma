@@ -14,30 +14,35 @@ enum Role {
 }
 
 enum Status {
-  ACTIVE
-  INACTIVE
-  BLOCKED
-  DELETED
-  SUSPENDED
-  PENDING
-  APPROVED
-  REJECTED
+  ACTIVO
+  INACTIVO
+  BLOQUEADO
+  ELIMINADO
+  SUSPENDIDO
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+  ALERTADO
+  EN_REVISION
+  CONTESTADO
 }
 
 model User {
-  id                 String    @id @default(uuid())
-  email              String    @unique
+  id                 String     @id @default(uuid())
+  email              String     @unique
   photo              String?
-  googleId           String?   @unique
+  googleId           String?    @unique
   name               String?
   telefono           String?
   ci                 String?
-  aceptacionTerminos Boolean   @default(false)
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  role               Role      @default(USER)
-  status             Status    @default(PENDING)
+  aceptacionTerminos Boolean    @default(false)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  role               Role       @default(USER)
+  status             Status     @default(INACTIVO)
   contacts           Contact[]
+  Alert              Alert[]
+  Denuncia           Denuncia[]
 }
 
 model Contact {
@@ -46,4 +51,42 @@ model Contact {
   user      User     @relation(fields: [userId], references: [id])
   contact   String
   createdAt DateTime @default(now())
+}
+
+model Alert {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  status    Status   @default(PENDIENTE)
+  latitud   String
+  longitud  String
+  audio     String
+  createdAt DateTime @default(now())
+}
+
+model Violentometro {
+  id       String @id @default(uuid())
+  question Json
+}
+
+model Denuncia {
+  id                 String       @id @default(uuid())
+  tipo_denuncia      TipoDenuncia
+  nombre_denunciante String
+  nombre_denunciado  String
+  descripcion        String
+  n_denuncia         Int
+  userId             String
+  recursos           String[]
+  user               User         @relation(fields: [userId], references: [id])
+  status             Status       @default(EN_REVISION)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+}
+
+enum TipoDenuncia {
+  PSICOLOGICA
+  FISICA
+  FAMILIAR
+  SEXUAL
 }

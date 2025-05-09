@@ -6,7 +6,7 @@ export const step1 = async (email: string) => {
       where: {
         email,
         status: {
-          in: ["ACTIVE", "APPROVED"],
+          in: ["ACTIVO", "APROBADO"],
         },
       },
     });

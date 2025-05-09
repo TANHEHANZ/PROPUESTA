@@ -4,10 +4,25 @@ import { fromError } from "zod-validation-error";
 import { API } from "../config/http/response";
 
 export const validate =
-  (schema: ZodSchema<any>, type: "body" | "query" = "body") =>
+  (schema: ZodSchema<any>, type: "body" | "query" | "file" = "body") =>
   (req: Request, res: Response, next: NextFunction): void => {
     try {
-      const dataToValidate = type === "body" ? req.body : req.query;
+      let dataToValidate;
+      switch (type) {
+        case "query":
+          dataToValidate = req.query;
+          break;
+        case "file":
+          dataToValidate = {
+            ...req.body,
+            ...(req.file && { file: req.file }),
+            ...(req.files && { files: req.files }),
+          };
+          break;
+        default:
+          dataToValidate = req.body;
+      }
+
       schema.parse(dataToValidate);
       next();
     } catch (error) {

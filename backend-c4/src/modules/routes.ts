@@ -1,5 +1,11 @@
 import { Router } from "express";
 import LoginRouter from "./login/login.routes";
+import UserRoutes from "./user/user.routes";
+import AlertRouter from "./alert/alrt.routes";
+import DenunciasRouter from "./denuncias/denuncias.routes";
 export const router = Router();
 router.use("/login", LoginRouter);
+router.use("/user", UserRoutes);
+router.use("/alert", AlertRouter);
+router.use("/denuncias", DenunciasRouter);
 export default router;
