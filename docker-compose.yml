@@ -1,0 +1,20 @@
+name: munaykidev
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "82:3000"
+    restart: always
+    command: >
+      sh -c "npx prisma db push && npm start"
+    networks:
+      - munaykidev-net
+    volumes:
+      - ./backend/:/code
+      - /code/node_modules
+
+networks:
+  munaykidev-net:
+    driver: bridge

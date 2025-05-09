@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const validate_1 = require("../../infraestructure/helpers/validate");
+const denuncias_1 = require("../../infraestructure/validators/denuncias");
+const denuncia_create_controller_1 = require("./controller/denuncia.create.controller");
+const multer_config_1 = require("../../infraestructure/lib/multer.config");
+const denuncias_all_controller_1 = require("./controller/denuncias.all.controller");
+const DenunciasRouter = (0, express_1.Router)();
+DenunciasRouter.post("/", multer_config_1.upload.array("recursos", 10), (0, validate_1.validate)(denuncias_1.schemaDenuncias, "file"), denuncia_create_controller_1.CreateDenunciaController).get("/", denuncias_all_controller_1.DenunciaAllController);
+exports.default = DenunciasRouter;
